@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Pomodoro</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            /* Center horizontally */
+            align-items: center;
+            /* Center vertically */
+            height: 100vh;
+            /* Full viewport height */
+
+            background: linear-gradient(45deg, #0f0a69, #3e55da);
+            /* Define the gradient */
+            transition: background 0.5s ease;
+            /* Add a transition */
+        }
+
+        .no {
+            font-size: 130px;
+            display: inline;
+        }
+
+        .button {
+            padding: 10px;
+            font-size: large;
+            width: 210px;
+            border: none;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, #1e1985, #5469df);
+            /* Define the gradient */
+            transition: background 0.5s ease;
+            /* Add a transition */
+            border-radius: 2px;
+        }
+
+        .button:hover {
+            background: linear-gradient(45deg, #080541, #1f33a2);
+            /* Define the gradient */
+            transition: background 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <p class="no" , id=sec_min_no>0</p>
+            <p class="no">:</p>
+            <p class="no" , id=sec_ten_no>0</p>
+            <p class="no" , id=sec_unit_no>0</p>
+
+            <div class="buttons">
+                <button class="button" onclick="counter()">Set</button>
+                <button class="button" onclick="reset()">Reset</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var sec_unit = 0;
+        var sec_ten = 0;
+        var min = 0;
+
+        var min_no = document.getElementById("sec_min_no");
+        var sec_ten_no = document.getElementById("sec_ten_no");
+        var sec_unit_no = document.getElementById("sec_unit_no");
+        var intervalId;
+
+        var counter = () => {
+            let count = 0;
+            intervalId = setInterval(function () {
+                count++;
+                sec_unit++;
+                if (sec_unit > 9) {
+                    sec_unit = 0;
+                    sec_ten++;
+
+                    if (sec_ten == 6) {
+                        sec_ten = 0;
+                        sec_unit = 0;
+                        min++;
+                    }
+                    if (min > 25) {
+                        console.log("time fininshed");
+                    }
+                }
+                if (count < 1500) {
+                    console.log("Interval #" + count);
+                    console.log(min, sec_ten, sec_unit);
+                    min_no.innerHTML = min;
+                    sec_ten_no.innerHTML = sec_ten;
+                    sec_unit_no.innerHTML = sec_unit;
+                }
+                else {
+                    clearInterval(intervalId);
+                    console.log("Interval stopped");
+                    min_no.innerHTML = 0;
+                    sec_ten_no.innerHTML = 0;
+                    sec_unit_no.innerHTML = 0;
+                }
+
+            }, 1000); // Executes every 1000 milliseconds (1 second)
+
+        }
+
+        var reset = () => {
+            clearInterval(intervalId);
+            console.log("Interval stopped");
+            min_no.innerHTML = 0;
+            sec_ten_no.innerHTML = 0;
+            sec_unit_no.innerHTML = 0;
+
+            sec_unit = 0;
+            sec_ten = 0;
+            min = 0;
+
+        } 
+    </script>
+</body>
+
+</html>
